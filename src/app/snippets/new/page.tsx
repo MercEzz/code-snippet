@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import FormSnippet from "@/components/FormSnippet";
 import { db } from "@/db/index";
 import NewSnippetForm from "@/components/NewSnippetForm";
 
