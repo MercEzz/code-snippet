@@ -1,30 +1,16 @@
-import { redirect } from "next/navigation";
-import { db } from "@/db/index";
+"use client";
+
 import NewSnippetForm from "@/components/NewSnippetForm";
+import * as actions from "@/actions";
+import { useFormState } from "react-dom";
 
 export default function NewSnippet() {
-  async function createSnippet(formData: FormData) {
-    // this need to be a server action!
-    "use server";
-
-    // check the user's input. are they valid?
-    const title = formData.get("title") as string;
-    const code = formData.get("code") as string;
-
-    // create entry in database
-    await db.snippet.create({
-      data: {
-        title,
-        code,
-      },
-    });
-    // redirect the user back to the root page
-    redirect("/");
-  }
-
+  const [formState, action] = useFormState(actions.createSnippet, {
+    message: "",
+  });
   return (
-    <form action={createSnippet}>
-      <NewSnippetForm />
+    <form action={action}>
+      <NewSnippetForm formState={formState} />
     </form>
   );
 }

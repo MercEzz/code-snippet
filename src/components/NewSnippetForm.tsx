@@ -5,7 +5,13 @@ import FormSnippet from "./FormSnippet";
 import { useState } from "react";
 import Link from "next/link";
 
-export default function NewSnippetForm() {
+interface snippetFormProps {
+  formState: {
+    message: string;
+  };
+}
+
+export default function NewSnippetForm({ formState }: snippetFormProps) {
   const [code, setCode] = useState<string>("");
 
   function handleEditorChange(value: string = "") {
@@ -32,6 +38,11 @@ export default function NewSnippetForm() {
             options={{ minimap: { enabled: false } }}
           />
         </div>
+        {formState.message ? (
+          <div className="my-2 p-2 bg-red-200 border rounded border-red-400">
+            {formState.message}
+          </div>
+        ) : null}
         <div className="flex w-full items-center justify-end">
           <button
             type="submit"
